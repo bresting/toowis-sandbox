@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="toowis.sandbox.CarMapper">
+    
+    <select id="search" resultType="toowis.sandbox.Car">
+        select * from car
+         where 1 = 1
+        <if test="maker != null">
+            and maker = #{maker}
+        </if>
+        <if test="model != null">
+            model = #{model}
+        </if>
+    </select>
+    
+</mapper>
