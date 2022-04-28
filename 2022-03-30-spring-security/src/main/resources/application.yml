@@ -1,0 +1,132 @@
+spring:
+  datasource:
+    #driver-class-name: org.postgresql.Driver
+    #url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+#  devtools:
+#    livereload:
+#      enabled: true  # livereload 사용시 활성화
+#    restart:
+#      enabled: false #운영 에서는 제거
+
+#  jpa:
+#    hibernate:
+#      #ddl-auto: create
+#      ddl-auto: none
+#      use-new-id-generator-mappings: true
+#    show-sql: true
+#    properties :
+#      hibernate:
+#        format_sql: true
+
+# 내 노션 :: 100.기술정보 > P1.Spring > 22-03-21-oauth
+# https://www.notion.so/22-03-21-oauth-c3d89dd9bc28429999ceb088e9f67d7e
+  security:
+    oauth2.client:
+      registration:
+        google:
+          clientId: GOOGLE-client-id
+          clientSecret: GOOGLE-client-secret
+          scope:
+           - email
+           - profile
+        naver:
+          clientId: NAVER-client-id
+          clientSecret: NAVER-client-secret
+          authorization-grant-type: authorization_code
+          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+          scope: nickname
+          clientName: Naver
+        kakao:
+          clientId: KAKAO-client-id
+          clientSecret: KAKAO-client-secret
+          authorization-grant-type: authorization_code
+          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+          scope:
+            - profile_nickname
+          clientName: Kakao
+     # Provider 설정
+     # org.springframework.security.config.oauth2.client.CommonOAuth2Provider
+     # GOOGLE, GITHUB, FACEBOOK, OKTA만 제공된다.
+     # Provider 직접 구현 하는 경우 toowis.sandbox.backup.ExtentionOAuth2Provider 참조
+      provider :
+        naver:
+          authorizationUri: https://nid.naver.com/oauth2.0/authorize
+          tokenUri: https://nid.naver.com/oauth2.0/token
+          userInfoUri: https://openapi.naver.com/v1/nid/me
+          userNameAttribute: response
+        kakao:
+          authorizationUri: https://kauth.kakao.com/oauth/authorize
+          tokenUri: https://kauth.kakao.com/oauth/token
+          userInfoUri: https://kapi.kakao.com/v2/user/me
+          userNameAttribute: id
+
+server:
+  port: 7070
+  servlet:
+    session:
+      persistent: true
+      store-dir: "C:/neo-starter/logs/toowis-sandbox-security"
+      
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+#server.servlet.session.persistent
+#server.servlet.session.store-dir=지속성 있는 쿠키 사용을 위한 폴더 이름으로, 존재하는 폴더여야 한다.
+
+# 다수의 사용 가능한 일반 서버 속성
+#server.port=HTTP 서버 포트, 기본값 8080
+#server.address=바인딩될 IP주소, 기본값 0,0,0,0(예, 모든 IP)
+#server.use-forward-headers= spring boot 2.2에서는 deprecated 되었음
+#server.jetty.max-http-form-post-size=HTTP 헤더의 최대 크기, 기본값 0(무제한)
+#server.connection-timeout= deprecated
+#server.http2.enabled=현재 컨테이너가 지원할 경우 http2 활성화 여부, 기본값 false
+#server.compression.enabled=HTTP 압출 확성화 여부, 기본값 false
+#server.compression.mime-types=압축이 적용될 MIME 유형 목록(쉼표 구분)
+#server.compression.excluded-user-agents=압축이 비활성화될 사용자 에이전트 목록(쉼표 구분)
+#server.compression.min-response-size=압축이 적용될 최소 요청 크기, 기본값 2048
+#server.servlet.context-path=애플리케이션의 주요 컨텍스트 경로, 기본값 루트 애플리케이션
+#server.servlet.application-display-name=컨테이너에서 표시 이름으로 사용될 이름, 기본값 application
+#server.servlet.context-parameters.{변수}={값} 서블릿 컨테이너 컨텍스트/초기 매개변수
+
+# JSP관련 서버속성
+#server.servlet.jsp.registered=JSP 서블릿 등록되는지 여부, 기본값 true
+#server.servlet.jsp.class-name=JSP 서블릿 클래스 이름, 기본값 org.apache.jasper.servlet.JspServlet이다. 톰캣,제티 둘다 JSP구현체로 자스퍼를 사용
+#server.servlet.jsp.init-parameters.{매개변수}={값} JSP 서블릿의 컨텍스트 매개변수
+# 매개변수 쓰는법 : https://stackoverflow.com/questions/26639475/how-to-set-context-param-in-spring-boot
+
+# HTTP 세션 관련 서버 속성
+#server.servlet.session.timeout=세션 시간 초과, 기본값 30분
+#server.servlet.session.tracking-modes=세션 추적 모드, cookie,url,ssl 중 하나 이상 사용, 기본값 없음, 컨테이너 기본값 따름
+#server.servlet.session.persistent=재시작시 세션 데이터 저장 여부, 기본값 false
+#server.servlet.session.cookie.name=세션 식별자가 저장될 쿠키이름, 기본값 없음, 컨테이너 기본값 따름
+#server.servlet.session.cookie.domain=세션 쿠키에 사용될 도메인 값, 기본값 없음, 컨테이너 기본값
+#server.servlet.session.cookie.path=세션 쿠키에 사용될 경로값, 이하동일, 이하동일
+#server.servlet.session.cookie.comment=세션 쿠키에 사용될 주석, 이하동일, 이하동일
+#server.servlet.session.cookie.http-only=세션 쿠키가 http에서만 접근되는지 여부, 이하동일, 이하동일
+#server.servlet.session.cookie.secure=쿠키가 SSL로만 전송되는지 여부, 이하동일, 이하동일
+#server.servlet.session.cookie.max-age=세션 쿠키의 활성 시간, 이하동일, 이하동일
+#server.servlet.session.store-dir=지속성 있는 쿠키 사용을 위한 폴더 이름으로, 존재하는 폴더여야 한다.
+
+# SSL 관련 서버 속성
+#server.ssl.enabled=SSL 활성화 여부, 기본값 true
+#server.ssl.ciphers=지원되는 SSL암호, 기본값 공백
+#server.ssl.client-auth=SSL 클라이언트 인증을 원하는지(WANT) 또는 필요로 하는지(NEED) 여부, 기본값 공백
+#server.ssl.protocol=사용할 SSL 프로토콜, 기본값 TLS
+#server.ssl.enabled-protocols=활성화될 SSL 프로토콜, 기본값 공백
+#server.ssl.key-alias=키 저장소의 키를 식별할 별칭, 기본값 공백
+#server.ssl.key-password=키 저장소의 키에 접근할 비번, 기본값 공백
+#server.ssl.key-store=키 저장소 위치, 일반적으로 JKS 파일, 기본값 공백
+#server.ssl.key-store-password=키 저장소에 접근할 비번, 기본값 공백
+#server.ssl.key-store-type=키 저장소 유형, 기본값 공백
+#server.ssl.key-store-provider=키 저장소 제공자, 기본값 공백
+#server.ssl.trust-store=신뢰 저장소 위치
+#server.ssl.trust-store-password=신뢰 저장소에 접근할 비번, 기본값 공백
+#server.ssl.trust-store-type=신뢰 저장소 유형, 기본값 공백
+#server.ssl.trust-store-provider=신뢰 저장소 제공자, 기본값 공백
+
+#위의 언급된 속성은 애플리케이션 내장된 컨테이너를 사용할때만 적용

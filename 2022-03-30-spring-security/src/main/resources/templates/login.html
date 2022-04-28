@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head(pageTitle='Login')" />
+<body>
+<div class="container text-center">
+    <form th:action="@{/login}" method="post" style="max-width: 400px; margin: 20px auto;">
+        <div class="border border-secondary rounded p-3">
+            <div th:if="${param.error}">
+                <p class="text-danger">Invalid username or password.</p>
+            </div>
+            <div th:if="${param.logout}">
+                <p class="text-warning">You have been logged out.</p>
+            </div>
+            <div>
+                <p><input type="email" name="email" required class="form-control" placeholder="E-mail" /></p>
+            </div>
+            <div>
+                <p><input type="password" name="pass" required class="form-control" placeholder="Password" /></p>
+            </div>
+            <div>
+                <p><input type="submit" value="Login" class="btn btn-primary" /></p>
+            </div>
+        </div>
+    </form>
+    <div><p>---------- OR ----------</p></div>
+        <div>
+        <!-- ClientRegistration
+             org.springframework.security.oauth2.client.registration.ClientRegistrationRepository#findByRegistrationId
+             └- org.springframework.security.oauth2.client.registration.ClientRegistration#getRegistrationId
+            
+            URL은 표준으로 정해져 있고, registrationId가 back-end에 등록 되어 있어야 함
+            /oauth2/authorization/{registrationId}
+        -->
+        <!-- <h4><a th:href="@{/oauth2/authorization/somesite}">somesite</a></h4>  -->
+        <h4 th:each="url : ${oauth2UrlMap}"><a th:text="${url.key}" th:href="${url.value}">Client</a></h4>
+    </div>
+</div>
+</body>
+</html>

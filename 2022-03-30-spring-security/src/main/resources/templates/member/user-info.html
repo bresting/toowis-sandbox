@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head(pageTitle='Member infomation')" />
+<body>
+    <div th:replace="fragments :: header"></div>
+    <div align="center">
+        <h1>Member infomation</h1>
+        <p th:text="${loginName}"></p>
+        <br/>
+    </div>
+    
+</body>
+</html>

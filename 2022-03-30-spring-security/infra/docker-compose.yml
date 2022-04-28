@@ -1,0 +1,20 @@
+########################################################################################################################
+# https://hub.docker.com/_/postgres/ >> Initialization scripts
+# /docker-entrypoint-initdb.d
+# *.sql, *.sql.gz, or *.sh 가 있는 경우 서비스 처음 시작 할때 실행 해준다.
+########################################################################################################################
+version: '3.8'
+services:
+
+  db:
+    image: postgres
+    container_name: sandbox-postgres-security
+    #restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - E:/docker_volumn/sandbox/postgres-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
