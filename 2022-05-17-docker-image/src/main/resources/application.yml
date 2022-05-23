@@ -1,0 +1,6 @@
+server:
+  port: 7070
+
+#logging:
+#  file:
+#    path: /var/log
