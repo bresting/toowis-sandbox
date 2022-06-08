@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./js/jsencrypt.min.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
+    (async () => {
+        const response = await fetch("http://localhost:8080/publicKey", { method: "GET" });
+        const text = await response.text();
+        $("#publicKey").val(text);
+        return text;
+    })();
+    
+    // 암호화
+    $("#btn-encrypt").click(function () {
+        // 키 설정
+        var crypt = new JSEncrypt();
+        crypt.setPrivateKey($("#publicKey").val());
+
+        // 평문 암호화
+        var plainText = $("#plainText").val();
+        var encryptedText = crypt.encrypt(plainText);
+        $("#encryptedText").val(encryptedText);
+    });
+    
+    // 복호화
+    $("#btn-decrypt").click(function () {
+        const enc = $("#encryptedText").val();
+        fetch("http://localhost:8080/decText", {
+            method: "POST"
+            , headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                body : enc
+            })
+        })
+        .then( response => response.text() )
+        .then( result   => {
+            $("#decryptedText").val( result );
+        });
+    });
+    
+    $("#plainText").val( ( Math.random() * 100 ));
+    
+});
+
+</script>
+</head>
+
+<body>
+
+<div style="padding: 0px 10px;">
+    <div>
+        <label for="publicKey">Public key</label><br />
+        <textarea id="publicKey" cols="66" rows="7"></textarea>
+    </div>
+    <hr>
+    <div>
+        <label for="plainText">평문</label>
+        <input type="text" id="plainText" style="width:100px;" />
+    </div>
+    <div style="margin-top: 5px">
+        <button id="btn-encrypt">암호화</button>
+        <input type="text" id="encryptedText" style="width:300px;" />
+    </div>
+    <div style="margin-top: 5px">
+        <button id="btn-decrypt">복호화</button>
+        <input type="text" id="decryptedText" style="width:300px;" />
+    </div>
+     
+</div>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./js/jsencrypt.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // 암호화 하기
+    $('#encrypt').click(function () {
+        // 키 설정
+        var crypt = new JSEncrypt();
+        crypt.setPrivateKey($('#publicKey').val());;
+
+        // 평문 암호화
+        var plainText = $("#plainText").val();
+        var encryptedText = crypt.encrypt(plainText);
+        $('#encryptedText').val(encryptedText);
+    });
+
+    // 복호화 하기
+    $('#decrypt').click(function () {
+        // 복호화
+        var crypt = new JSEncrypt();
+        crypt.setPrivateKey($('#privateKey').val());
+
+        // 복호화
+        var encryptedText = $('#encryptedText').val();
+        var decryptedText = crypt.decrypt(encryptedText);
+        $('#decryptedText').val(decryptedText);
+    });
+});
+</script>
+</head>
+
+<body>
+<div style="display:flex;">
+
+    <div>
+        <label for="privateKey">Private key</label><br />
+<textarea id="privateKey" cols="66" rows="16">-----BEGIN RSA PRIVATE KEY-----
+MIICXQIBAAKBgQC/PjLP657ffdZMFbhvjuZxNBMZPoMG3DtBZNXJj80n4UMfgirv
+6SIT4jwkrszvwMcl+l7zo4yUxOW1HmcMFUzlih84FQi341F3/UVqeSVxYJ6wE07c
+ic7auwVOkUJIMphVAL0aKdlDcGbKSrG1KU1uMJpFx+k6gz2tHzCqcrJXdwIDAQAB
+AoGAFDF1HA89D0wyPIZumxjzrDBbc+bt3uOSPi1vhYDxoKxgcgtEjWCIgKD6yMTM
+TuSEIrZ1IDS8u1ivCJjVOKlnHQbjgqQQGu6Ywz5MGl7OUZtPG0kIU7v5C4Q0RmEC
+SHdqmvD9xDvdeWs8LguwvPvesoRPGI5ZEu+11B2eIDA6XUECQQDiOCDMGJ04Zx84
+IvpnzGvLzVWQ/Y0xunPuHJSxpHGxFsRIwB4WS/3gTekZGPLHx/pm+wsDend0ks9y
+Wp9I5+xFAkEA2GtTYRrCOblyQcFXGZvkX9DQSyL2/aMR9qVy8fDyQz4AKQQwsh6v
+fPLzQHB8EcYHpztQK6kEbx68/iP16ly2iwJBANnGtPQmYfxxceGF8tBIQCIDu3MI
+VIvh9kbtJsxZBcY4p59tq8lFQNNVzagGl3pybwICfVjM5gDIcIKi8SKreo0CQQC1
+NskOWjWf2CRP4vBnxR0pDdQb1h8yqkT0Xf0tkS+KFnRT4+pSe1c+LMB6iLWavFLU
+ONocdN39naNqufnET/WZAkBcdEAfguaVBoE0XmGZDDVrkdBegxgWK8oC5K+3Mja8
+gBFCD3zFJRi6mY8xqpKJnVaiIJNZnYPwrLGvWfgKGpeZ
+-----END RSA PRIVATE KEY-----</textarea><br />
+
+<label for="publicKey">Public key</label><br />
+<textarea id="publicKey" cols="66" rows="7">-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/PjLP657ffdZMFbhvjuZxNBMZ
+PoMG3DtBZNXJj80n4UMfgirv6SIT4jwkrszvwMcl+l7zo4yUxOW1HmcMFUzlih84
+FQi341F3/UVqeSVxYJ6wE07cic7auwVOkUJIMphVAL0aKdlDcGbKSrG1KU1uMJpF
+x+k6gz2tHzCqcrJXdwIDAQAB
+-----END PUBLIC KEY-----</textarea>
+    </div>
+    
+    <div style="padding-left: 10px;">
+        <label for="plainText">평문</label><br />
+        <input type="text" id="plainText" style="width:400px;" value="greetings" /><br />
+        <label for="encryptedText">암호화된 문장</label><br />
+        <input type="text" id="encryptedText" style="width:400px;" /><br />
+        <label for="decryptedText">복호화된 문장</label><br />
+        <input type="text" id="decryptedText" style="width:400px;" /><br />
+        <button id="encrypt">암호화</button><button id="decrypt">복호화</button>
+    </div>
+</div>
+
+<a href="./transaction.html">거래</a>
+
+</body>
+</html>
