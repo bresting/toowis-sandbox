@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:oracle:thin:@localhost:1531:XE
+    username: user
+    password: pass
+    hikari:
+      maximum-pool-size: 2
+      connection-timeout: 5000
+      connection-test-query: SELECT 1 FROM DUAL
+      validation-timeout: 1000
+    
+server:
+  port: 8080
+  
+mybatis:
+  configuration:
+    cache-enabled: false
+    local-cache-scope: statement
