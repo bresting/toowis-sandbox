@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.5</version>
+        <version>2.7.0</version>
     </parent>
     <groupId>toowis.sandbox</groupId>
     <artifactId>2022-04-01-logging-process</artifactId>

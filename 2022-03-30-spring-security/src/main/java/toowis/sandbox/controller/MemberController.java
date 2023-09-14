@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
@@ -12,8 +14,12 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
+import toowis.sandbox.dto.Member;
+import toowis.sandbox.service.MyUserService;
 
 @Controller
 @RequiredArgsConstructor
@@ -61,7 +67,7 @@ public class MemberController {
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
-        if ( authentication.getPrincipal() instanceof toowis.sandbox.service.CustomUserDetailsService.MyUserDetails ) {
+        if ( authentication.getPrincipal() instanceof toowis.sandbox.service.CustomUserDetailsService.DBManagedUserDetails ) {
             return "member/user-info";
         }
         
@@ -78,6 +84,13 @@ public class MemberController {
         model.addAttribute("loginName", oauth2user.getAttribute("name").toString());
         
         return "member/user-info";
+    }
+    
+    @Autowired MyUserService myUserService;
+    @PutMapping("/user")
+    public int update(@RequestBody Member user) {
+        myUserService.userModify(user);
+        return HttpStatus.OK.value();
     }
 }
 

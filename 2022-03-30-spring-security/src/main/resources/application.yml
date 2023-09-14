@@ -25,44 +25,45 @@ spring:
 # 내 노션 :: 100.기술정보 > P1.Spring > 22-03-21-oauth
 # https://www.notion.so/22-03-21-oauth-c3d89dd9bc28429999ceb088e9f67d7e
   security:
-    oauth2.client:
-      registration:
-        google:
-          clientId: GOOGLE-client-id
-          clientSecret: GOOGLE-client-secret
-          scope:
-           - email
-           - profile
-        naver:
-          clientId: NAVER-client-id
-          clientSecret: NAVER-client-secret
-          authorization-grant-type: authorization_code
-          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
-          scope: nickname
-          clientName: Naver
-        kakao:
-          clientId: KAKAO-client-id
-          clientSecret: KAKAO-client-secret
-          authorization-grant-type: authorization_code
-          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
-          scope:
-            - profile_nickname
-          clientName: Kakao
-     # Provider 설정
-     # org.springframework.security.config.oauth2.client.CommonOAuth2Provider
-     # GOOGLE, GITHUB, FACEBOOK, OKTA만 제공된다.
-     # Provider 직접 구현 하는 경우 toowis.sandbox.backup.ExtentionOAuth2Provider 참조
-      provider :
-        naver:
-          authorizationUri: https://nid.naver.com/oauth2.0/authorize
-          tokenUri: https://nid.naver.com/oauth2.0/token
-          userInfoUri: https://openapi.naver.com/v1/nid/me
-          userNameAttribute: response
-        kakao:
-          authorizationUri: https://kauth.kakao.com/oauth/authorize
-          tokenUri: https://kauth.kakao.com/oauth/token
-          userInfoUri: https://kapi.kakao.com/v2/user/me
-          userNameAttribute: id
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 1070839900416-ut2resl20f22copp3dss2v6m19va1cek.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+             - email
+             - profile
+          naver:
+            clientId: 'NAVER-client-id'
+            clientSecret: 'NAVER-client-secret'
+            authorization-grant-type: authorization_code
+            redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            scope: nickname
+            clientName: Naver
+          kakao:
+            clientId: 9c996fb43a03ac4da50e4757c2b0d2c0
+            clientSecret: a1xqsiX63wDo5G13eg7Vpfkp9uXrWh
+            authorization-grant-type: authorization_code
+            redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            scope:
+              - profile_nickname
+            clientName: Kakao
+        # Provider 설정
+        # org.springframework.security.config.oauth2.client.CommonOAuth2Provider
+        # GOOGLE, GITHUB, FACEBOOK, OKTA만 제공된다.
+        # Provider 직접 구현 하는 경우 toowis.sandbox.backup.ExtentionOAuth2Provider 참조
+        provider :
+          naver:
+            authorizationUri: https://nid.naver.com/oauth2.0/authorize
+            tokenUri: https://nid.naver.com/oauth2.0/token
+            userInfoUri: https://openapi.naver.com/v1/nid/me
+            userNameAttribute: response
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
 
 server:
   port: 7070

@@ -69,7 +69,7 @@ import org.springframework.stereotype.Service;
  *     }
  * }
  * </pre>
- * 
+ * <hr/>
  * <pre class="code">
  * userService 지정시
  * HttpSecurity.oauth2Login()
