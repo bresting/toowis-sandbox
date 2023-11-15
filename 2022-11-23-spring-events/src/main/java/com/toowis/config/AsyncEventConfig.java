@@ -8,7 +8,6 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
 /**
  * implements ApplicationListener<?> 비동기 처리 설정
- * 
  */
 @Configuration
 public class AsyncEventConfig {
